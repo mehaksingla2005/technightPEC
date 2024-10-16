@@ -2,7 +2,7 @@ import Header from "./components/Header"; // Ensure Header.jsx exists
 import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Home from './pages/Home'; 
-import Login from './pages/login'; 
+import Login from './pages/Login'; 
 import Signup from './pages/Signup'; 
 import Chat from './pages/Chat'; 
 import NotFound from './pages/NotFound'; 
