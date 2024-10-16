@@ -6,16 +6,18 @@ import NavigationLink from './shared/NavigationLink';
 
 const Header = () => {
   const auth = useAuth();
-  
+
   return (
     <AppBar sx={{ bgcolor: "transparent", position: "static", boxShadow: "none" }}>
-      <Toolbar sx={{ display: "flex" }}>
-        <Logo />
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ flexGrow: 1 }}> {/* Logo shifted to the left */}
+          <Logo />
+        </div>
         <div>
-          {auth?.isLoggedIn ? (  // Note the change from isLoggedin to isLoggedIn
+          {auth?.isLoggedIn ? (
             <>
               <NavigationLink bg="#00fffc" to="/chat" text="Go To Chat" TextColor="black" />
-              <NavigationLink bg="#51538f" to="/" text="Logout" TextColor="white" onclick={auth.logout} />
+              <NavigationLink bg="#51538f" to="/" text="Logout" TextColor="white" onClick={auth.logout} />
             </>
           ) : (
             <>
