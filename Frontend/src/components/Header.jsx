@@ -3,9 +3,16 @@ import { AppBar, Toolbar } from '@mui/material';
 import Logo from './shared/Logo';
 import { useAuth } from '../context/authcontext';
 import NavigationLink from './shared/NavigationLink';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 
 const Header = () => {
   const auth = useAuth();
+  const location = useLocation(); // Get current route
+
+  // Conditionally hide header on the chat page
+  if (location.pathname === '/chat') {
+    return null; // Don't render Header on chat page
+  }
 
   return (
     <AppBar sx={{ bgcolor: "transparent", position: "static", boxShadow: "none" }}>
