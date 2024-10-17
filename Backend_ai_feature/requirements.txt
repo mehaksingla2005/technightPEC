@@ -1,0 +1,18 @@
+fastapi==0.115.2                   # For building the API
+uvicorn==0.32.0                    # For running FastAPI server
+langchain==0.3.3                   # Core Langchain functionality
+langchain_community==0.3.2         # Community-contributed document loaders (e.g., PyPDFLoader)
+langchain-chroma==0.1.4            # Chroma integration with Langchain
+sentence-transformers==3.2.0       # For HuggingFace embeddings
+langchain-google-genai==2.0.1      # Google Gemini LLM integration
+langchain-huggingface==0.1.0       # HuggingFace LLM integration with Langchain
+python-dotenv==1.0.1               # To load environment variables from .env
+python-multipart==0.0.12
+pypdf==5.0.1                       # For PDF loading/processing (ensure it's compatible with PyPDFLoader)
+# # Additional dependencies for text processing, PDF handling, and embedding generation
+                    
+# # chroma-client               # Chroma Vector DB client if needed (make sure you use the right version)
+# tqdm                        # For progress bars during embedding generation or other long processes
+# pydantic                    # For FastAPI request/response validation
+# transformers                # HuggingFace transformers for embedding generation
+# numpy                       # Often used in conjunction with transformers for embedding handling
