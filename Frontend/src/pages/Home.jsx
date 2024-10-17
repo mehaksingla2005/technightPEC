@@ -10,7 +10,7 @@ const Home = () => {
 
   // Directly navigate to /chat2
   const handleNavigate = () => {
-    navigate("/chat2");
+    navigate("/chat");
   };
 
   return (
