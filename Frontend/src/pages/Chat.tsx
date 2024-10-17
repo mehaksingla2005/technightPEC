@@ -1,11 +1,19 @@
+import { Box } from '@mui/material'
 import React from 'react'
 
-const chat = () => {
+const Chat = () => {
   return (
-    <div>
-      
-    </div>
+    <Box sx={{display:"flex",flex:1,width:"100%",height:"100%",mt:3,gap:3}}>
+
+      <Box sx={{display:"flex"}}> 
+          <Box sx={{display:"flex",width:"100%",height:"60vh",bgcolor:"rgb(17,29,39"}}>
+
+          </Box>
+      </Box>
+
+
+    </Box>
   )
 }
 
-export default chat
+export default Chat
