@@ -10,7 +10,7 @@ const Header = () => {
   const location = useLocation(); // Get current route
 
   // Conditionally hide header on the chat page
-  if (location.pathname === '/chat') {
+  if (location.pathname === '/chat2') {
     return null; // Don't render Header on chat page
   }
 
@@ -23,7 +23,7 @@ const Header = () => {
         <div>
           {auth?.isLoggedIn ? (
             <>
-              <NavigationLink bg="#00fffc" to="/chat" text="Go To Chat" TextColor="black" />
+              <NavigationLink bg="#00fffc" to="/chat2" text="Go To Chat" TextColor="black" />
               <NavigationLink bg="#51538f" to="/" text="Logout" TextColor="white" onClick={auth.logout} />
             </>
           ) : (

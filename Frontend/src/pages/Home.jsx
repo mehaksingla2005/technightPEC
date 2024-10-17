@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { AppBar, Toolbar, Typography, Button, Container, Box, Paper, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-// import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 
 const Home = () => {
   const theme = useTheme();
-  const navigate = useNavigate(); // useNavigate hook for redirection
-  const [file, setFile] = useState(null); // State to store the uploaded file
+  const navigate = useNavigate();
 
-  const handleFileChange = (event) => {
-    const uploadedFile = event.target.files[0];
-    if (uploadedFile) {
-      setFile(uploadedFile);
-      // Redirect to the chat page
-      navigate("/chat");
-    }
+  // Directly navigate to /chat2
+  const handleNavigate = () => {
+    navigate("/chat");
   };
 
   return (
@@ -76,7 +70,7 @@ const Home = () => {
             </Typography>
           </motion.div>
 
-          {/* Upload Box */}
+          {/* Button for navigating to /chat2 */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -98,13 +92,11 @@ const Home = () => {
                 },
               }}
             >
-              {/* <CloudUploadIcon fontSize="large" sx={{ color: "#f5f5f5" }} /> */}
               <Typography variant="h6" fontWeight={600} mt={2} color="#e0e0e0">
                 Upload Your PDF
               </Typography>
               <Button
                 variant="contained"
-                component="label"
                 sx={{
                   mt: 2,
                   borderRadius: "20px",
@@ -116,16 +108,10 @@ const Home = () => {
                     backgroundColor: "#6a1b9a",
                   },
                 }}
+                onClick={handleNavigate} // Navigate to /chat2 on click
               >
-              Try PDF Reader
-              <input
-                hidden
-                accept="application/pdf"
-                type="file"
-                onChange={handleFileChange} // Handle file upload
-              />
-            </Button>
-
+                Try PDF Reader
+              </Button>
             </Paper>
           </motion.div>
         </Box>
