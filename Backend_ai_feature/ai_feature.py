@@ -21,6 +21,7 @@ os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
 os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
 
 # HuggingFace embeddings setup
+os.environ["TRANSFORMERS_CACHE"] = os.getenv("TRANSFORMERS_CACHE", "/persistent_cache")
 hf_embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-mpnet-base-v2", 
     model_kwargs={'device': 'cpu'}, 
