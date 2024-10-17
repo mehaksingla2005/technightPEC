@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { registerUser, loginUser, verifyToken, addRoom, uploadDocument, addQuestionAnswer } = require('./controllers/User'); 
-
+const dotenv=require('dotenv')
+dotenv.config()
 const app = express();
 app.use(express.json());
 const cors = require('cors');
@@ -12,7 +13,7 @@ const corsOptions = {
   app.use(cors(corsOptions));
   
 
-mongoose.connect('mongodb+srv://user_rachit:benten15@cluster0.e1wdtr3.mongodb.net/pdf_search_bot', {
+mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })

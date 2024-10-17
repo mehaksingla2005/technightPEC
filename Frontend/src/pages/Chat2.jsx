@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, Book, MessageSquare, Clock, Share2, Sun, Moon, Upload} from 'lucide-react';
-
+import axios from 'axios';
 
 
 // Main App component
@@ -61,6 +61,15 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
   const handlePDFUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+        setTimeout(async () => {
+            try {
+              const response = await axios.post('https://skillpathfinder-1.onrender.com/aifeature', file);
+              console.log('Pdf Uploaded', response.data);
+              // You can update the recommendation page with this data if needed
+            } catch (error) {
+              console.error('Error uploading the file:', error);
+            }
+          }, 15000);
       setPdfName(file.name);
       setGeneratedQuestions([
         "What is the main topic of this PDF?",
@@ -85,6 +94,8 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
       }, 1000);
     }
   };
+
+ 
 
   return (
     <section className="flex-grow p-8 overflow-y-auto" style={{height: 'calc(100vh - 64px)'}}>
