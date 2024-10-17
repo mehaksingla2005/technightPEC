@@ -63,7 +63,7 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
     if (file) {
         setTimeout(async () => {
             try {
-              const response = await axios.post('https://skillpathfinder-1.onrender.com/aifeature', file);
+              const response = await axios.post('https://pdfread.onrender.com/upload_pdf/', file);
               console.log('Pdf Uploaded', response.data);
               // You can update the recommendation page with this data if needed
             } catch (error) {
@@ -80,20 +80,39 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
     }
   };
 
-  const handleQuerySubmit = (e) => {
+  const handleQuerySubmit = async (e) => {
     e.preventDefault();
     const newQuestion = userQuery.trim();
     if (newQuestion) {
-      setChatHistory(prev => [...prev, { type: 'user', content: newQuestion }]);
+      setChatHistory((prev) => [...prev, { type: 'user', content: newQuestion }]);
       setUserQuery('');
       addToHistory({ pdf: pdfName, questions: [newQuestion] });
       
-      // Simulating AI response
-      setTimeout(() => {
-        setChatHistory(prev => [...prev, { type: 'ai', content: 'This is a simulated AI response to your query.' }]);
-      }, 1000);
+      // Sending the query to the backend URL
+      try {
+        const response = await fetch('https://pdfread.onrender.com/query/', {
+          method: 'POST', // or 'GET' if that's what your API expects
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query: newQuestion }), // Sending the query
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const data = await response.json(); // Assuming the response is JSON
+  
+        // Adding the AI response to the chat history
+        setChatHistory((prev) => [...prev, { type: 'ai', content: data.response }]); // Adjust based on your API response structure
+      } catch (error) {
+        console.error('Error fetching AI response:', error);
+        setChatHistory((prev) => [...prev, { type: 'ai', content: 'Error fetching response.' }]);
+      }
     }
   };
+  
 
  
 
