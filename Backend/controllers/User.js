@@ -4,13 +4,13 @@ const User = require('../models/User');
 
 const JWT_SECRET = 'your_secret_key'; 
 
-const registerUser = async (username, password) => {
+const registerUser = async (username,password,email) => {
     try {
-        console.log("hello")
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username,
-            password: hashedPassword,
+            hashedPassword,
+            email,
             rooms: []
         });
         await newUser.save();
