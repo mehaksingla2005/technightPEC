@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Typography, Paper, Drawer, Button, AppBar, Toolbar } from '@mui/material';
-// import Logo from './shared/Logo'; // Import your Logo component
+import { Box, TextField, Typography, Paper, Drawer, Button, AppBar, Toolbar, IconButton } from '@mui/material';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]); // Store chat messages
@@ -29,7 +28,7 @@ const Chat = () => {
         <Toolbar sx={{ display: 'flex', alignItems: 'center' }}>
           {/* Logo and "SmartDoc" Text */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <img src="logo.jpeg" alt="Open AI" width="30" height="30" />
+            <img src="logo.jpeg" alt="Open AI" width="30" height="30" />
             <Typography variant="h6" sx={{ color: '#ffffff', ml: 2 }}>
               SmartDoc
             </Typography>
@@ -55,7 +54,7 @@ const Chat = () => {
             },
           }}
         >
-          {drawerOpen ? '-' : '+'}
+          <img src="hamburger.png" alt="Hamburger Icon" style={{ width: "40px", height: "40px", borderRadius: "10px" }} />
         </Button>
 
         {/* Chat History Area */}
@@ -66,8 +65,22 @@ const Chat = () => {
               bgcolor: '#2c2c2c', // Dark gray background for history
               height: '100%',
               p: 2,
+              position: 'relative',
             }}
           >
+            {/* Close Icon inside Drawer */}
+            <IconButton 
+              onClick={toggleDrawer} 
+              sx={{
+                position: 'absolute',
+                top: 10,
+                right: 10,
+                color: 'white'
+              }}
+            >
+              <img src="close.png" alt="Close Icon" style={{ width: "30px", height: "30px" ,borderRadius:"20px"}} />
+            </IconButton>
+
             <Typography variant="h6" color="white">Chat History</Typography>
             {messages.map((msg, index) => (
               <Paper
