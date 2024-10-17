@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Typography } from '@mui/material';
-import CustomizedInput from '../components/shared/CustomizedInput'; // Assuming you have the CustomizedInput component
+import { Box, Typography, TextField } from '@mui/material';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
@@ -13,20 +12,26 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const endpoint = 'https://skillpathfinder-1.onrender.com/api/auth/signup';
-      const payload = { username, email, password };
+      // Log input values before sending them
+      console.log('Submitting:', { username, email, password });
+
+      const response = await axios.post('http://localhost:8080/api/register', {
+        username,
+        email,
+        password,
+      });
+
+      console.log('Response:', response.data);
       
-      const response = await axios.post(endpoint, payload);
-      
-      console.log(response.data);
-      
-      // Store the token in localStorage
-      localStorage.setItem('userToken', response.data.token);
-      
+      // Store the token in localStorage if present
+      if (response.data.token) {
+        localStorage.setItem('userToken', response.data.token);
+      }
+
       // Redirect to the home page
       navigate('/');
     } catch (error) {
-      console.error('Signup error:', error.response.data);
+      console.error('Signup error:', error);
     }
   };
 
@@ -49,29 +54,32 @@ const SignUp = () => {
             <Typography variant="h4" textAlign="center" padding={2} fontWeight={600}>
               Sign Up
             </Typography>
-            <CustomizedInput 
+            <TextField 
               type="text" 
-              name="username" 
               label="Username" 
               value={username} 
               onChange={(e) => setUsername(e.target.value)} 
+              fullWidth 
               required 
+              margin="normal"
             />
-            <CustomizedInput 
+            <TextField 
               type="email" 
-              name="email" 
               label="Email" 
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
+              fullWidth 
               required 
+              margin="normal"
             />
-            <CustomizedInput 
+            <TextField 
               type="password" 
-              name="password" 
               label="Password" 
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
+              fullWidth 
               required 
+              margin="normal"
             />
             <Box mt={2}>
               <button
@@ -84,7 +92,7 @@ const SignUp = () => {
                   borderRadius: "4px",
                   border: "none",
                   cursor: "pointer",
-                  fontWeight: "bold"
+                  fontWeight: "bold",
                 }}
               >
                 Sign Up

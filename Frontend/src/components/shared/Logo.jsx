@@ -6,7 +6,7 @@ const Logo = () => {
     return (
         <div style={{ display: "flex", margin: "auto", alignItems: "center", gap: "15px" }}>
             <Link to="/">
-                <img src="logo.jpeg" alt="Open AI" width="30" height="30" />
+                
                 <Typography
                     sx={{
                         display: { md: "block", small: "none", xs: "none" },
@@ -15,7 +15,7 @@ const Logo = () => {
                         textShadow: "2px 2px 20px #000",
                     }}
                 >
-                    <span style={{ fontSize: "20px" }}>PDF</span><span>-BOT</span>
+                    <span style={{ fontSize: "20px" }}>PDF Reader</span>
                 </Typography>
             </Link>
         </div>
