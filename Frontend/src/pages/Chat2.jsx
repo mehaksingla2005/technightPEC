@@ -63,7 +63,7 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
     if (file) {
         setTimeout(async () => {
             try {
-              const response = await axios.post('https://skillpathfinder-1.onrender.com/aifeature', file);
+              const response = await axios.post('/', file);
               console.log('Pdf Uploaded', response.data);
               // You can update the recommendation page with this data if needed
             } catch (error) {
@@ -82,15 +82,35 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
 
   const handleQuerySubmit = (e) => {
     e.preventDefault();
-    const newQuestion = userQuery.trim();
-    if (newQuestion) {
-      setChatHistory(prev => [...prev, { type: 'user', content: newQuestion }]);
-      setUserQuery('');
-      addToHistory({ pdf: pdfName, questions: [newQuestion] });
+    // const newQuestion = userQuery.trim();
+    // if (newQuestion) {
+    //   setChatHistory(prev => [...prev, { type: 'user', content: newQuestion }]);
+    //   setUserQuery('');
+    //   addToHistory({ pdf: pdfName, questions: [newQuestion] });
+    setTimeout(async () => {
+        try {
+          const response = await axios.post('/', answers);
+          console.log('Form submitted:', response.data);
+          // You can update the recommendation page with this data if needed
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        }
+      }, 15000);
       
       // Simulating AI response
       setTimeout(() => {
-        setChatHistory(prev => [...prev, { type: 'ai', content: 'This is a simulated AI response to your query.' }]);
+        // setChatHistory(prev => [...prev, { type: 'ai', content: 'This is a simulated AI response to your query.' }]);
+        const fetchRecommendations = async () => {
+            try {
+              setIsLoading(true);
+              const response = await axios.post('/', answers);
+              setRecommendationData(response.data);
+            } catch (err) {
+              setError(err.response?.data?.message || err.message);
+            } finally {
+              setIsLoading(false);
+            }
+          };
       }, 1000);
     }
   };
@@ -159,6 +179,6 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
       </div>
     </section>
   );
-};
+
 
 export default Chat2;
