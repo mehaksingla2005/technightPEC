@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { FileText, MessageSquare, Clock, Upload } from 'lucide-react';
+import { FileText, Book, MessageSquare, Clock, Share2, Sun, Moon, Upload} from 'lucide-react';
 import axios from 'axios';
+
 
 // Main App component
 const Chat2 = () => {
   const [theme, setTheme] = useState('dark');
   const [history, setHistory] = useState([]);
   const [currentPDF, setCurrentPDF] = useState(null);
-
+  
   const addToHistory = (item) => {
     setHistory(prevHistory => [...prevHistory, item]);
   };
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+      
       <main className="flex">
         <Sidebar theme={theme} history={history} setCurrentPDF={setCurrentPDF} />
         <PDFAnalysis theme={theme} addToHistory={addToHistory} currentPDF={currentPDF} />
@@ -22,10 +24,12 @@ const Chat2 = () => {
   );
 };
 
-// Sidebar component
+
+
+// Sidebar component (updated)
 const Sidebar = ({ theme, history, setCurrentPDF }) => {
   return (
-    <aside className={`w-64 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'} p-4 overflow-y-auto`} style={{ height: 'calc(100vh - 64px)' }}>
+    <aside className={`w-64 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'} p-4 overflow-y-auto`} style={{height: 'calc(100vh - 64px)'}}>
       <h2 className="font-bold mb-4">History</h2>
       <ul>
         {history.map((item, index) => (
@@ -47,63 +51,74 @@ const Sidebar = ({ theme, history, setCurrentPDF }) => {
   );
 };
 
-// PDFAnalysis component
+// PDFAnalysis component (updated)
 const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
   const [pdfName, setPdfName] = useState(currentPDF || 'Upload a PDF');
   const [generatedQuestions, setGeneratedQuestions] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
   const [userQuery, setUserQuery] = useState('');
 
-  const handlePDFUpload = async (e) => {
+  const handlePDFUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append('pdf', file);
-
-      try {
-        const response = await axios.post('https://your-api-endpoint.com/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
-        console.log('PDF Uploaded:', response.data);
-        setPdfName(file.name);
-        setGeneratedQuestions([
-          "What is the main topic of this PDF?",
-          "Can you summarize the key points?",
-          "Are there any specific terms or concepts I should focus on?"
-        ]);
-        addToHistory({ pdf: file.name, questions: [] });
-      } catch (error) {
-        console.error('Error uploading the file:', error);
-      }
+        setTimeout(async () => {
+            try {
+              const response = await axios.post('/', file);
+              console.log('Pdf Uploaded', response.data);
+              // You can update the recommendation page with this data if needed
+            } catch (error) {
+              console.error('Error uploading the file:', error);
+            }
+          }, 15000);
+      setPdfName(file.name);
+      setGeneratedQuestions([
+        "What is the main topic of this PDF?",
+        "Can you summarize the key points?",
+        "Are there any specific terms or concepts I should focus on?"
+      ]);
+      addToHistory({ pdf: file.name, questions: [] });
     }
   };
 
-  const handleQuerySubmit = async (e) => {
+  const handleQuerySubmit = (e) => {
     e.preventDefault();
-    const newQuestion = userQuery.trim();
-    if (newQuestion) {
-      setChatHistory(prev => [...prev, { type: 'user', content: newQuestion }]);
-      setUserQuery('');
-
-      try {
-        const response = await axios.post('https://your-api-endpoint.com/query', { query: newQuestion });
-        const aiResponse = response.data.answer;
-        setChatHistory(prev => [...prev, { type: 'ai', content: aiResponse }]);
-
-        addToHistory(prevHistory => {
-          const updatedHistory = prevHistory.map(item =>
-            item.pdf === pdfName ? { ...item, questions: [...item.questions, newQuestion] } : item
-          );
-          return updatedHistory;
-        });
-      } catch (error) {
-        console.error('Error submitting query:', error);
-      }
+    // const newQuestion = userQuery.trim();
+    // if (newQuestion) {
+    //   setChatHistory(prev => [...prev, { type: 'user', content: newQuestion }]);
+    //   setUserQuery('');
+    //   addToHistory({ pdf: pdfName, questions: [newQuestion] });
+    setTimeout(async () => {
+        try {
+          const response = await axios.post('/', answers);
+          console.log('Form submitted:', response.data);
+          // You can update the recommendation page with this data if needed
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        }
+      }, 15000);
+      
+      // Simulating AI response
+      setTimeout(() => {
+        // setChatHistory(prev => [...prev, { type: 'ai', content: 'This is a simulated AI response to your query.' }]);
+        const fetchRecommendations = async () => {
+            try {
+              setIsLoading(true);
+              const response = await axios.post('/', answers);
+              setRecommendationData(response.data);
+            } catch (err) {
+              setError(err.response?.data?.message || err.message);
+            } finally {
+              setIsLoading(false);
+            }
+          };
+      }, 1000);
     }
   };
+
+ 
 
   return (
-    <section className="flex-grow p-8 overflow-y-auto" style={{ height: 'calc(100vh - 64px)' }}>
+    <section className="flex-grow p-8 overflow-y-auto" style={{height: 'calc(100vh - 64px)'}}>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{pdfName}</h1>
         <label className={`cursor-pointer ${theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'} text-white px-4 py-2 rounded flex items-center`}>
@@ -112,7 +127,7 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
           <input type="file" className="hidden" onChange={handlePDFUpload} accept=".pdf" />
         </label>
       </div>
-
+      
       {/* Notebook guide section */}
       <div className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} rounded-lg p-6 mb-8 shadow-lg`}>
         <h2 className="text-xl font-semibold mb-4 flex items-center">
@@ -164,6 +179,6 @@ const PDFAnalysis = ({ theme, addToHistory, currentPDF }) => {
       </div>
     </section>
   );
-};
+
 
 export default Chat2;
