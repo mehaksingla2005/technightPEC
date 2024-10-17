@@ -6,6 +6,7 @@ const JWT_SECRET = 'your_secret_key';
 
 const registerUser = async (username, password) => {
     try {
+        console.log("hello")
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username,

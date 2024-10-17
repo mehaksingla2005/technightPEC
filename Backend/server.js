@@ -4,6 +4,13 @@ const { registerUser, loginUser, verifyToken, addRoom, uploadDocument, addQuesti
 
 const app = express();
 app.use(express.json());
+const cors = require('cors');
+const corsOptions = {
+    origin: 'http://localhost:5173',  // frontend origin
+    optionsSuccessStatus: 200,
+  };
+  app.use(cors(corsOptions));
+  
 
 mongoose.connect('mongodb+srv://user_rachit:benten15@cluster0.e1wdtr3.mongodb.net/pdf_search_bot', {
     useNewUrlParser: true,

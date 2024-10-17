@@ -13,20 +13,22 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const endpoint = 'https://skillpathfinder-1.onrender.com/api/auth/signup';
-      const payload = { username, email, password };
-      
-      const response = await axios.post(endpoint, payload);
-      
+      const response = await axios.post('http://localhost:8080/register', {username,email,password});
       console.log(response.data);
       
       // Store the token in localStorage
       localStorage.setItem('userToken', response.data.token);
-      
+      const newUser = new User({
+        username: username,
+        email: email,
+        password: password
+      })
+
+      await newUser.save();
       // Redirect to the home page
       navigate('/');
     } catch (error) {
-      console.error('Signup error:', error.response.data);
+      console.error('Signup error:', error);
     }
   };
 
