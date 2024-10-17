@@ -9,6 +9,8 @@ const cors = require('cors');
 const corsOptions = {
     origin: 'http://localhost:5173',  // frontend origin
     optionsSuccessStatus: 200,
+    credentials: true,
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Authorization']
   };
   app.use(cors(corsOptions));
   
@@ -20,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Failed to connect to MongoDB', err));
 
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
     const { username, password } = req.body;
     const user = await registerUser(username, password);
     if (user) {

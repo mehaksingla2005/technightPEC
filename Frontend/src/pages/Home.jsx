@@ -111,19 +111,21 @@ const Home = () => {
                   padding: "10px 20px",
                   backgroundColor: "#8e24aa",
                   textTransform: "none",
+                  width: "350px", // Adjust the width as needed
                   "&:hover": {
                     backgroundColor: "#6a1b9a",
                   },
                 }}
               >
-                Try PDF Reader
-                <input
-                  hidden
-                  accept="application/pdf"
-                  type="file"
-                  onChange={handleFileChange} // Handle file upload
-                />
-              </Button>
+              Try PDF Reader
+              <input
+                hidden
+                accept="application/pdf"
+                type="file"
+                onChange={handleFileChange} // Handle file upload
+              />
+            </Button>
+
             </Paper>
           </motion.div>
         </Box>

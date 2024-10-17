@@ -13,16 +13,11 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/register', {username,email,password});
+      const response = await axios.post('http://localhost:8080/api/register', {username,email,password});
       console.log(response.data);
       
       // Store the token in localStorage
       localStorage.setItem('userToken', response.data.token);
-      const newUser = new User({
-        username: username,
-        email: email,
-        password: password
-      })
 
       await newUser.save();
       // Redirect to the home page
